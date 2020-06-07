@@ -18,15 +18,14 @@ soundFileString = convertCharsToStrings(soundFile);
 soundFileName = strsplit(soundFileString,'.');
 filename= append('output',soundFileName(1),'.wav');
 audiowrite(filename,inputSound,newFrequency);
-[inputSound,newFrequency] = audioread(filename);
+[newInputSound,newFrequency] = audioread(filename);
 %sound(inputSound,newFrequency);
-dt = 1/newFrequency;
-t = 0:dt:(length(inputSound)*dt)-dt;
-% plot(t,inputSound); xlabel('Seconds'); ylabel('Amplitude');
-% figure
-% plot(psd(spectrum.periodogram,inputSound,'Fs',newFrequency,'NFFT',length(inputSound)));
+x = 1:1:length(newInputSound);
+y = newInputSound(x);
+plot(x,y);
+
 %cosine plot
-inputSize = size(inputSound,1);
+inputSize = size(newInputSound,1);
 fs = frequency;
 t = 1/fs:inputSize;
 w = (2*pi)/fs;%1000;
