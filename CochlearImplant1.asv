@@ -3,17 +3,37 @@ function [] = CochlearImplant1(soundFile)
 %   Detailed explanation goes here
 
 info = audioinfo(soundFile);
-[outputSound,frequency] = audioread(soundFile);
-soundSize = size(outputSound,2);
+[inputSound,frequency] = audioread(soundFile);
+soundSize = size(inputSound,2);
 if soundSize == 2
-    outputSound = outputSound(:);
+    inputSound = inputSound(:);
 end
+%sound(inputSound,frequency);
 if frequency > 16000
     [P,Q] = rat(16000/frequency);
-    frequency = resample(frequency,P,Q);
+    newFrequency = resample(frequency,P,Q);
+end
+newFrequency = int32(newFrequency);
+soundFileString = convertCharsToStrings(soundFile);
+soundFileName = strsplit(soundFileString,'.');
+filename= append('output',soundFileName(1),'.wav');
+audiowrite(filename,inputSound,newFrequency);
+[inputSound,newFrequency] = audioread(filename);
+%sound(inputSound,newFrequency);
 
-%outputSoundInfo = audioinfo(outputSound);
-outputSoundInfo.SampleRate = frequency;
-disp(x);
+% % dt = 1/newFrequency;
+% % t = 0:dt:(length(inputSound)*dt)-dt;
+% % plot(t,inputSound); xlabel('Seconds'); ylabel('Amplitude');
+% % figure
+% % plot(psd(spectrum.periodogram,inputSound,'Fs',inputSound,'NFFT',length(inputSound)));
+%cosine plot
+inputSize = size(inputSound,1);
+fs = frequency;
+t = 1/fs:inputSize;
+w = (2*pi)/fs;%1000;
+amp = inputSound; %info.SampleRate;
+newSignal = cos(w*t);
+plot(newSignal);
+
 end
 
