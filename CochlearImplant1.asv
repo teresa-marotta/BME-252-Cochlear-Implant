@@ -18,21 +18,28 @@ soundFileString = convertCharsToStrings(soundFile);
 soundFileName = strsplit(soundFileString,'.');
 filename= append('output',soundFileName(1),'.wav');
 audiowrite(filename,inputSound,newFrequency);
-[inputSound,newFrequency] = audioread(filename);
+[newInputSound,newFrequency] = audioread(filename);
 %sound(inputSound,newFrequency);
+x = 1:1:length(newInputSound);
+y = newInputSound(x);
+plot(x,y);
 
-% % dt = 1/newFrequency;
-% % t = 0:dt:(length(inputSound)*dt)-dt;
-% % plot(t,inputSound); xlabel('Seconds'); ylabel('Amplitude');
-% % figure
-% % plot(psd(spectrum.periodogram,inputSound,'Fs',inputSound,'NFFT',length(inputSound)));
 %cosine plot
-inputSize = size(inputSound,1);
-fs = frequency;
-t = 1/fs:inputSize;
-w = (2*pi)/fs;%1000;
-amp = inputSound; %info.SampleRate;
-newSignal = cos(w*t);
+% % inputSize = size(newInputSound,1);
+% % fs = frequency;
+% % t = 1/fs:inputSize;
+% % w = (2*pi)/fs;%1000;
+% % amp = inputSound; %info.SampleRate;
+% % newSignal = cos(w*t);
+% % plot(newSignal);
+freq = 1000;
+T = 1/freq;
+duration = info.Duration;
+timeStep = 1/16000;%info.SampleRate;
+t = 0:0.1:duration;
+newSignalArray = zeros(1,soundSize);
+w = (2*pi);
+newSignal = cos(w*freq*t);
 plot(newSignal);
 
 end
