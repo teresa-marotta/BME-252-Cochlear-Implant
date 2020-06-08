@@ -8,7 +8,7 @@ soundSize = size(inputSound,2);
 if soundSize == 2
     inputSound = inputSound(:);
 end
-%sound(inputSound,frequency);
+sound(inputSound,frequency);
 if frequency > 16000
     [P,Q] = rat(16000/frequency);
     newFrequency = resample(frequency,P,Q);
@@ -19,19 +19,27 @@ soundFileName = strsplit(soundFileString,'.');
 filename= append('output',soundFileName(1),'.wav');
 audiowrite(filename,inputSound,newFrequency);
 [newInputSound,newFrequency] = audioread(filename);
-%sound(inputSound,newFrequency);
+sound(inputSound,newFrequency);
 x = 1:1:length(newInputSound);
 y = newInputSound(x);
 plot(x,y);
-
 %cosine plot
-inputSize = size(newInputSound,1);
-fs = frequency;
-t = 1/fs:inputSize;
-w = (2*pi)/fs;%1000;
-amp = inputSound; %info.SampleRate;
-newSignal = cos(w*t);
-plot(newSignal);
-
+freq = 1000;
+T = 1/freq;
+period = 2*T;
+duration = info.Duration;
+timeStep = 1/info.SampleRate;
+t = 0:timeStep:duration;
+t2 = 0:timeStep:period;
+newSignalArray = zeros(1,info.TotalSamples);
+w = (2*pi*freq);
+timeLength = size(t,2);
+for i = 1:timeLength
+    time = t(i);
+    newSignalArray(i) = cos(w*time);
+end 
+sound(newSignalArray, freq);
+cosineWave = cos(w*t2);
+plot(t2,cosineWave);
 end
 
