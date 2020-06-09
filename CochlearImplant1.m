@@ -1,6 +1,4 @@
 function [] = CochlearImplant1(soundFile)
-%UNTITLED2 Summary of this function goes here
-%   Detailed explanation goes here
 
 info = audioinfo(soundFile);
 [inputSound,frequency] = audioread(soundFile);
@@ -22,11 +20,14 @@ audiowrite(filename,inputSound,newFrequency);
 sound(inputSound,newFrequency);
 x = 1:1:length(newInputSound);
 y = newInputSound(x);
+figure('Name', 'Frequency Plot');
 plot(x,y);
+title('Sound Waveform')
+xlabel('Sample Number')
+ylabel('Frequency')
 %cosine plot
 freq = 1000;
-T = 1/freq;
-period = 2*T;
+period = 2*(1/freq);
 duration = info.Duration;
 timeStep = 1/info.SampleRate;
 t = 0:timeStep:duration;
@@ -40,6 +41,10 @@ for i = 1:timeLength
 end 
 sound(newSignalArray, freq);
 cosineWave = cos(w*t2);
+figure('Name', 'Cosine Plot');
 plot(t2,cosineWave);
+title('1kHz Sound Wave')
+xlabel('time (s)')
+ylabel('Frequency')
 end
 
