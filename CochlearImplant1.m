@@ -14,17 +14,18 @@ end
 newFrequency = int32(newFrequency);
 soundFileString = convertCharsToStrings(soundFile);
 soundFileName = strsplit(soundFileString,'.');
-filename= append('output',soundFileName(1),'.wav');
+%filename= append('output',soundFileName(1),'.wav');
+filename = strcat('output',soundFileName(1),'.wav');
 audiowrite(filename,inputSound,newFrequency);
 [newInputSound,newFrequency] = audioread(filename);
 sound(inputSound,newFrequency);
 x = 1:1:length(newInputSound);
 y = newInputSound(x);
-figure('Name', 'Frequency Plot');
+figure('Name', 'SoundWave Plot');
 plot(x,y);
 title('Sound Waveform')
 xlabel('Sample Number')
-ylabel('Frequency')
+ylabel('Sample Value')
 %cosine plot
 freq = 1000;
 period = 2*(1/freq);
@@ -39,12 +40,12 @@ for i = 1:timeLength
     time = t(i);
     newSignalArray(i) = cos(w*time);
 end 
-sound(newSignalArray, freq);
+sound(newSignalArray,info.SampleRate);
 cosineWave = cos(w*t2);
 figure('Name', 'Cosine Plot');
 plot(t2,cosineWave);
 title('1kHz Sound Wave')
-xlabel('time (s)')
-ylabel('Frequency')
+xlabel('Sample Number')
+ylabel('y=cos(2*pi*1000*t)')
 end
 
