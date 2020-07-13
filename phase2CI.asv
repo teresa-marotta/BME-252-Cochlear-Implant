@@ -1,0 +1,48 @@
+function phase2CI(soundFile,N)
+info = audioinfo(soundFile);
+[inputSound,frequency] = audioread(soundFile);
+soundSize = size(inputSound,2);
+if soundSize == 2
+    inputSound = inputSound(:);
+end
+%sound(inputSound,frequency);
+if frequency > 16000
+    [P,Q] = rat(16000/frequency);
+    newFrequency = resample(frequency,P,Q);
+end
+newFrequency = int32(newFrequency);
+soundFileString = convertCharsToStrings(soundFile);
+soundFileName = strsplit(soundFileString,'.');
+%filename= append('output',soundFileName(1),'.wav');
+filename = strcat('output',soundFileName(1),'.wav');
+audiowrite(filename,inputSound,newFrequency);
+[newInputSound,newFrequency] = audioread(filename);
+%sound(inputSound,newFrequency);
+x = 1:1:length(newInputSound);
+y = newInputSound(x);
+figure('Name', 'SoundWave Plot');
+plot(x,y);
+title('Sound Waveform')
+xlabel('Sample Number')
+ylabel('Sample Value')
+
+lowerFreq = 100;
+upperFreq = 8000;
+
+channels = linspace(lowerFreq,upperFreq,N+1);
+
+soundChannels = zeros(N,length(inputSound));
+%Task 5
+
+for i=1:N
+    filt = butterworth(channels(i),channels(i+1));
+    
+    filteredChannel = filter(filt,inputSound);
+    
+    soundChannels(i,:)=transpose(filteredChannel);
+end 
+
+disp(filt);
+%task 6
+
+end 
