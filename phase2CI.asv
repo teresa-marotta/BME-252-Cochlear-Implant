@@ -1,7 +1,4 @@
-function [] = CochlearImplant1(soundFile)
-%UNTITLED2 Summary of this function goes here
-%   Detailed explanation goes here
-
+function phase2CI(soundFile,N)
 info = audioinfo(soundFile);
 [inputSound,frequency] = audioread(soundFile);
 soundSize = size(inputSound,2);
@@ -16,31 +13,36 @@ end
 newFrequency = int32(newFrequency);
 soundFileString = convertCharsToStrings(soundFile);
 soundFileName = strsplit(soundFileString,'.');
-filename= append('output',soundFileName(1),'.wav');
+%filename= append('output',soundFileName(1),'.wav');
+filename = strcat('output',soundFileName(1),'.wav');
 audiowrite(filename,inputSound,newFrequency);
 [newInputSound,newFrequency] = audioread(filename);
 %sound(inputSound,newFrequency);
 x = 1:1:length(newInputSound);
 y = newInputSound(x);
+figure('Name', 'SoundWave Plot');
 plot(x,y);
+title('Sound Waveform')
+xlabel('Sample Number')
+ylabel('Sample Value')
 
-%cosine plot
-% % inputSize = size(newInputSound,1);
-% % fs = frequency;
-% % t = 1/fs:inputSize;
-% % w = (2*pi)/fs;%1000;
-% % amp = inputSound; %info.SampleRate;
-% % newSignal = cos(w*t);
-% % plot(newSignal);
-freq = 1000;
-T = 1/freq;
-duration = info.Duration;
-timeStep = 1/16000;%info.SampleRate;
-t = 0:0.1:duration;
-newSignalArray = zeros(1,soundSize);
-w = (2*pi);
-newSignal = cos(w*freq*t);
-plot(newSignal);
+lowerFreq = 100;
+upperFreq = 8000;
 
-end
+channels = linspace(lowerFreq,upperFreq,N+1);
 
+soundChannels = zeros(N,length(inputSound));
+%Task 5
+
+for i=1:N
+    filt = butterworth(channels(i),channels(i+1));
+    
+    filteredChannel = filter(filt,inputSound);
+    
+    soundChannels(i,:)=transpose(filteredChannel);
+end 
+
+disp(filt);
+%task 6
+
+end 
