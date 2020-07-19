@@ -10,7 +10,7 @@ function Hd = butterworth(Fc1,Fc2)
 % All frequency values are in Hz.
 Fs = 16000;  % Sampling Frequency
 
-N   = 50;   % Order
+N   = 10;   % Order
 %Fc1 = 100;  % First Cutoff Frequency
 %Fc2 = 300;  % Second Cutoff Frequency
 
