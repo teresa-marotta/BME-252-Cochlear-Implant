@@ -94,15 +94,15 @@ lowEnvSoundChannel = envelopeSoundChannels(1,:);
 highEnvSoundChannel = envelopeSoundChannels(numChan,:);
 
 %Plot lowest sound channel
-figure('Name', 'Lowest Sound Channel AC');
+figure('Name', 'Lowest Sound Channel');
 plot(lowEnvSoundChannel,'b');
-title('Lowest Sound Channel AC')
+title('Lowest Sound Channel')
 xlabel('Sample Number')
 ylabel('Sample Value')
 %Plot highest sound channel
-figure('Name', 'Highest Sound Channel AC');
+figure('Name', 'Highest Sound Channel');
 plot(highEnvSoundChannel,'r');
-title('Highest Sound Channel AC');
+title('Highest Sound Channel');
 xlabel('Sample Number');
 ylabel('Sample Value');
 end 
