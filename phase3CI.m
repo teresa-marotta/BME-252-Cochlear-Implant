@@ -131,7 +131,7 @@ sound(outputSound,newFrequency);
 soundFileString = convertCharsToStrings(soundFile);
 soundFileName = strsplit(soundFileString,'.');
 filename = strcat('output',soundFileName(1),'.wav');
-audiowrite(filename,inputSound,16000);
-[newInputSound,newFrequency] = audioread(filename);
+audiowrite(filename,outputSound,16000);
+%[newInputSound,newFrequency] = audioread(filename);
 
 end 
