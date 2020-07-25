@@ -11,15 +11,14 @@ if frequency > 16000
     inputSound = resample(inputSound,16000,frequency);
     newFrequency = 16000;
 end
-%newFrequency = int32(newFrequency);
-soundFileString = convertCharsToStrings(soundFile);
-soundFileName = strsplit(soundFileString,'.');
-filename = strcat('output',soundFileName(1),'.wav');
-audiowrite(filename,inputSound,16000);
-[newInputSound,newFrequency] = audioread(filename);
+% soundFileString = convertCharsToStrings(soundFile);
+% soundFileName = strsplit(soundFileString,'.');
+% filename = strcat('output',soundFileName(1),'.wav');
+% audiowrite(filename,inputSound,16000);
+% [newInputSound,newFrequency] = audioread(filename);
 % sound(inputSound,newFrequency);
-x = 1:1:length(newInputSound);
-y = newInputSound(x);
+x = 1:1:length(inputSound);
+y = inputSound(x);
 figure('Name', 'SoundWave Plot');
 plot(x,y);
 title('Sound Waveform')
@@ -129,7 +128,10 @@ for i = 1:numChan
 end 
 sound(outputSound,newFrequency);
 %%save
-
-
+soundFileString = convertCharsToStrings(soundFile);
+soundFileName = strsplit(soundFileString,'.');
+filename = strcat('output',soundFileName(1),'.wav');
+audiowrite(filename,inputSound,16000);
+[newInputSound,newFrequency] = audioread(filename);
 
 end 
